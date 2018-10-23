@@ -29,14 +29,14 @@ public class Client {
         System.out.println("----------------B--------------");
         b.display();
 
-        /*
+        /**
          * 测试A==B?
          * 对任何的对象x，都有x.clone() !=x，即克隆对象与原对象不是同一个对象
          */
         System.out.print("A==B?");
         System.out.println( a == b);
 
-        /*
+        /**
          * 对任何的对象x，都有x.clone().getClass()==x.getClass()，即克隆对象与原对象的类型一样。
          */
         System.out.print("A.getClass()==B.getClass()?");
