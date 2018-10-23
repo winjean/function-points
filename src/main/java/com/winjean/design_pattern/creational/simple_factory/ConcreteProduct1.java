@@ -13,7 +13,7 @@ package com.winjean.design_pattern.creational.simple_factory;
  *
  * @version V1.0
  */
-public class ConcreteProduct1 implements Product{
+public class ConcreteProduct1 implements IProduct {
     @Override
     public void getInfo() {
         System.out.println("this is concrete product 1!");

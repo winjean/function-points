@@ -1,4 +1,4 @@
-package com.winjean.design_pattern.creational.simple_factory;
+package com.winjean.design_pattern.creational.factory_method;
 
 /**
  * 项目名称：重庆微警务（一期）
@@ -13,9 +13,9 @@ package com.winjean.design_pattern.creational.simple_factory;
  *
  * @version V1.0
  */
-public class ConcreteProduct2 implements IProduct {
+public class ConcreteFactory2 implements IFactory {
     @Override
-    public void getInfo() {
-        System.out.println("this is concrete product 2!");
+    public IProduct produceProduct() {
+        return new ConcreteProduct2();
     }
 }

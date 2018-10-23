@@ -1,4 +1,4 @@
-package com.winjean.design_pattern.creational.simple_factory;
+package com.winjean.design_pattern.creational.factory_method;
 
 /**
  * 项目名称：重庆微警务（一期）
