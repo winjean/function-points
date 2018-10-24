@@ -1,4 +1,4 @@
-package com.winjean.webservices.client;
+package com.winjean.webservice.client;
 
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;

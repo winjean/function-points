@@ -1,4 +1,4 @@
-package com.winjean.webservices.service;
+package com.winjean.webservice.service;
 
 import javax.xml.ws.Endpoint;
 

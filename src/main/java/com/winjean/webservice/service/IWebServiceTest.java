@@ -1,4 +1,4 @@
-package com.winjean.webservices.service;
+package com.winjean.webservice.service;
 
 //使用@WebService注解标注WebServiceI接口
 //@WebService
