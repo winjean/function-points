@@ -1,4 +1,4 @@
-### 创建型
+### 创建型([设计模式](../README.MD))
 
 1. 单例（Singleton）
 2. 简单工厂（Simple Factory）

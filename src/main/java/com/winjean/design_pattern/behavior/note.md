@@ -1,4 +1,4 @@
-### 行为型
+### 行为型([设计模式](../README.MD))
 
 1. 责任链（Chain Of Responsibility）
 2. 命令（Command）
