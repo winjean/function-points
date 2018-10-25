@@ -39,11 +39,20 @@ public class TestJavassist {
         System.out.println(str);
 
         CtClass test = pool.get("com.winjean.reflect.Test");
+
+        CtMethod m = CtNewMethod.make(sb.toString(), test);
+        test.addMethod(m);
+
         Class cls = test.toClass();
         Method method3 = cls.getMethod("method1",String.class, Integer.class);
-        Object result = method3.invoke(cls.newInstance(),"winjean",3);
+        Object object =  cls.newInstance();
+        Object result = method3.invoke(object,"winjean",3);
         System.out.println(result);
 
-
+        Method[] methods = Test.class.getDeclaredMethods();
+        for (Method mth : methods){
+            mth.setAccessible(true);
+            System.out.println("\n===============" + mth.getName() + "====================");
+        }
     }
 }
