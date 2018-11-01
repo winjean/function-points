@@ -3,9 +3,15 @@ package com.winjean.reflect;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
-import javassist.CtNewMethod;
-
-import java.lang.reflect.Method;
+import javassist.Modifier;
+import javassist.bytecode.AnnotationsAttribute;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.ConstPool;
+import javassist.bytecode.ParameterAnnotationsAttribute;
+import javassist.bytecode.annotation.Annotation;
+import javassist.bytecode.annotation.ArrayMemberValue;
+import javassist.bytecode.annotation.MemberValue;
+import javassist.bytecode.annotation.StringMemberValue;
 
 /**
  * 项目名称：重庆微警务（一期）
@@ -22,37 +28,68 @@ import java.lang.reflect.Method;
  */
 public class TestJavassist {
     public static void main(String[] args) throws Exception {
-        StringBuilder sb = new StringBuilder();
-        sb.append("public String getString(String arg){");
-        sb.append("  System.out.println(arg);");
-        sb.append("  return arg;");
-        sb.append("}");
 
         ClassPool pool = ClassPool.getDefault();
+
+        //生成类
         CtClass cc = pool.makeClass("TestJavassist");
-        CtMethod method = CtNewMethod.make(sb.toString(), cc);
-        cc.addMethod(method);
 
-        Class clazz =cc.toClass();
-        Method method1 = clazz.getMethod("getString",String.class);
-        Object str = method1.invoke(clazz.newInstance(),"hoho");
-        System.out.println(str);
+        // 创建方法
+        CtClass ccStringType = pool.get("java.lang.String");
+        // 参数：  1：返回类型  2：方法名称  3：传入参数类型  4：所属类CtClass
+        CtMethod ctMethod=new CtMethod(ccStringType,"sayHello",new CtClass[]{ccStringType},cc);
+        ctMethod.setModifiers(Modifier.PUBLIC);
+        StringBuffer body=new StringBuffer();
+        body.append("{");
+        body.append("\n    System.out.println($1);");
+        body.append("\n    return \"Hello, \" + $1;");
+        body.append("\n}");
+        ctMethod.setBody(body.toString());
+        cc.addMethod(ctMethod);
 
-        CtClass test = pool.get("com.winjean.reflect.Test");
+        ClassFile ccFile = cc.getClassFile();
+        ConstPool constPool = ccFile.getConstPool();
 
-        CtMethod m = CtNewMethod.make(sb.toString(), test);
-        test.addMethod(m);
+        // 添加类注解
+        AnnotationsAttribute bodyAttr = new AnnotationsAttribute(constPool, AnnotationsAttribute.visibleTag);
+        Annotation bodyAnnot = new Annotation("javax.jws.WebService", constPool);
+        bodyAnnot.addMemberValue("name", new StringMemberValue("HelloWoldService", constPool));
+        bodyAttr.addAnnotation(bodyAnnot);
 
-        Class cls = test.toClass();
-        Method method3 = cls.getMethod("method1",String.class, Integer.class);
-        Object object =  cls.newInstance();
-        Object result = method3.invoke(object,"winjean",3);
-        System.out.println(result);
+        ccFile.addAttribute(bodyAttr);
 
-        Method[] methods = Test.class.getDeclaredMethods();
-        for (Method mth : methods){
-            mth.setAccessible(true);
-            System.out.println("\n===============" + mth.getName() + "====================");
-        }
+        // 添加方法注解
+        AnnotationsAttribute methodAttr = new AnnotationsAttribute(constPool, AnnotationsAttribute.visibleTag);
+        Annotation methodAnnot = new Annotation("javax.jws.WebMethod", constPool);
+        methodAnnot.addMemberValue("operationName", new StringMemberValue("sayHelloWorld", constPool));
+        methodAttr.addAnnotation(methodAnnot);
+
+        Annotation resultAnnot = new Annotation("javax.jws.WebResult", constPool);
+        resultAnnot.addMemberValue("name", new StringMemberValue("result", constPool));
+        methodAttr.addAnnotation(resultAnnot);
+
+        //value 值为数组
+        Annotation requestMappingAnnotation = new Annotation("org.springframework.web.bind.annotation.RequestMapping", constPool);
+        ArrayMemberValue classValues = new ArrayMemberValue(constPool);
+        MemberValue[] classMemberValue = {new StringMemberValue("org.springframework.web.bind.annotation.RequestMapping", constPool)};
+        classValues.setValue(classMemberValue);
+        requestMappingAnnotation.addMemberValue("value", classValues);
+        bodyAttr.addAnnotation(requestMappingAnnotation);
+
+        ctMethod.getMethodInfo().addAttribute(methodAttr);
+
+        // 添加参数注解
+        ParameterAnnotationsAttribute parameterAtrribute = new ParameterAnnotationsAttribute(
+                constPool, ParameterAnnotationsAttribute.visibleTag);
+        Annotation paramAnnot = new Annotation("javax.jws.WebParam", constPool);
+        paramAnnot.addMemberValue("name", new StringMemberValue("name",constPool));
+        Annotation[][] paramArrays = new Annotation[1][1];
+        paramArrays[0][0] = paramAnnot;
+        parameterAtrribute.setAnnotations(paramArrays);
+
+        ctMethod.getMethodInfo().addAttribute(parameterAtrribute);
+
+        //将类输出
+        cc.writeFile();
     }
 }
