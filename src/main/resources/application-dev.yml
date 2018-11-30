@@ -1,47 +1,5 @@
 spring:
   application:
     name: framework
-  datasource:
-    #\u6570\u636E\u6E90\u8FDE\u63A5
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/winjean?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
-    password: root
-    #\u6570\u636E\u5E93\u8FDE\u63A5\u6C60\u8BBE\u7F6E
-
-#spring.datasource.initialSize=20
-#spring.datasource.minIdle=20
-#spring.datasource.maxActive=100
-#spring.datasource.maxWait=60000
-#spring.datasource.timeBetweenEvictionRunsMillis=60000
-#spring.datasource.minEvictableIdleTimeMillis=300000
-#spring.datasource.validationQuery=SELECT 1 FROM DUAL
-#spring.datasource.testWhileIdle=true
-#spring.datasource.testOnBorrow=false
-#spring.datasource.testOnReturn=false
-#spring.datasource.poolPreparedStatements=true
-#spring.datasource.maxPoolPreparedStatementPerConnectionSize=20
-#spring.datasource.filters=stat,wall,log4j
-#spring.datasource.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-
 server:
   port: 8080
-
-logging:
-  level:
-    com:
-      winjean: debug
-pagehelper:
-  helper-dialect: mysql
-##service.context-path= //
-#server.tomcat.uri-encoding=UTF-8
-#spring.thymeleaf.cache=false
-#spring.thymeleaf.mode=LEGACYHTML5
-#
-##\u65E5\u5FD7
-#logging.config=classpath:config/logback-spring.xml
-#
-##mybatis \u5B9E\u4F53\u7C7B\u6620\u5C04\u914D\u7F6E
-#mybatis.typeAliasesPackage=com.tencent.admin.bean
-#mybatis.config-location=classpath:config/mybatis-config.xml
