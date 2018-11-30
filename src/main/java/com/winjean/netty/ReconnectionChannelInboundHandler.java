@@ -28,7 +28,7 @@ public class ReconnectionChannelInboundHandler extends SimpleChannelInboundHandl
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("connection failure");
         final EventLoop eventLoop = ctx.channel().eventLoop();
-        eventLoop.schedule(() -> TimeClient.connect(new Bootstrap(),eventLoop),5, TimeUnit.SECONDS);
+        eventLoop.schedule(() -> NettyClient.connect(new Bootstrap(),eventLoop),5, TimeUnit.SECONDS);
         super.channelInactive(ctx);
     }
 

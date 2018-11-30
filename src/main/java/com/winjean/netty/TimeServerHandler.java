@@ -54,7 +54,7 @@ public class TimeServerHandler extends ChannelHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        //当发生异常时，关闭ChannelHandlerContext，释放和ChannelHandlerContext相关联的句柄等资源。
+        cause.printStackTrace();
         ctx.close();
     }
 }

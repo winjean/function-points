@@ -18,7 +18,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  *
  * @version V1.0
  */
-public class TimeClient {
+public class NettyClient {
 
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 8080;
@@ -66,6 +66,6 @@ public class TimeClient {
         //首先创建客户端处理I/O读写的NioEventLoopGroup线程组
         EventLoopGroup group = new NioEventLoopGroup();
 
-        TimeClient.connect(bootstrap, group);
+        NettyClient.connect(bootstrap, group);
     }
 }

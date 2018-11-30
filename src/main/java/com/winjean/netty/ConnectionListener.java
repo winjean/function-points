@@ -27,7 +27,7 @@ public class ConnectionListener implements ChannelFutureListener{
         if( ! future.isSuccess()){
             System.out.println("reconnect ....");
             final EventLoop eventLoop = future.channel().eventLoop();
-            eventLoop.schedule( () -> TimeClient.connect(new Bootstrap(), eventLoop), 5, TimeUnit.SECONDS);
+            eventLoop.schedule( () -> NettyClient.connect(new Bootstrap(), eventLoop), 5, TimeUnit.SECONDS);
         }
     }
 }

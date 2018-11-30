@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpServerCodec;
 
 /**
  * 项目名称：重庆微警务（一期）
@@ -18,7 +19,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  *
  * @version V1.0
  */
-public class TimeServer {
+public class NettyServer {
     public void bind(int port) throws Exception {
         //配置服务端的NIO线程组
         //NioEventLoopGroup是个线程组，它包含了一组NIO线程，专门用于网络事件的处理，
@@ -58,11 +59,13 @@ public class TimeServer {
     private class ChildChannelHandler extends ChannelInitializer {
         @Override
         protected void initChannel(Channel channel) throws Exception {
-            channel.pipeline().addLast(new TimeServerHandler());
+//            channel.pipeline().addLast(new TimeServerHandler());
+            channel.pipeline().addLast(new HttpServerCodec());
+            channel.pipeline().addLast(new HttpServerHandler());
         }
     }
 
     public static void main(String[] args) throws Exception {
-        new TimeServer().bind(8080);
+        new NettyServer().bind(8080);
     }
 }
