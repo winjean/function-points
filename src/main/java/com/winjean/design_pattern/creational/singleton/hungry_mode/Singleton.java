@@ -1,4 +1,4 @@
-package com.winjean.designPattern.creational.singleton.hungry_mode;
+package com.winjean.design_pattern.creational.singleton.hungry_mode;
 
 /**
  * 项目名称：重庆微警务（一期）
